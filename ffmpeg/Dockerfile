@@ -6,7 +6,7 @@ ARG NI_RELEASE_VERSION=4.7.0
 ARG NI_PACKAGE_NAME="Quadra_V${NI_RELEASE_VERSION}.zip"
 ARG NI_PACKAGE_FOLDER="Quadra_V${NI_RELEASE_VERSION}"
 ARG RC=RC4
-#FFMPEG_VERSION can be: n3.4.2, n4.1.3, n4.2.1, n4.3, n4.3.1, n4.4, n5.0
+#FFMPEG_VERSION can be: n3.4.2, n4.1.3, n4.2.1, n4.3, n4.3.1, n4.4, n4.4.2, n5.0, n5.1.2, n6.0, n6.1, n7.0
 ARG FFMPEG_VERSION=n5.0
 ARG FFMPEG_PACKAGE_NAME="${FFMPEG_VERSION}.tar.gz"
 
@@ -45,11 +45,12 @@ WORKDIR /NI_Release
 RUN unzip "$NI_PACKAGE_NAME"
 RUN tar -xzf "$FFMPEG_PACKAGE_NAME"
 
-#ffmpeg install
 RUN cp /NI_Release/"$NI_PACKAGE_FOLDER"/Quadra_SW_V"$NI_RELEASE_VERSION"_"$RC"/FFmpeg-"$FFMPEG_VERSION"_netint_v"$NI_RELEASE_VERSION"_"$RC".diff /NI_Release/FFmpeg-"$FFMPEG_VERSION"/
 RUN mv /NI_Release/"$NI_PACKAGE_FOLDER"/Quadra_SW_V"$NI_RELEASE_VERSION"_"$RC"/libxcoder /NI_Release
+#libxcoder install
 WORKDIR /NI_Release/libxcoder
 RUN bash ./build.sh
+#ffmpeg install
 WORKDIR /NI_Release/FFmpeg-"$FFMPEG_VERSION"
 RUN patch -t -p 1 < FFmpeg-"$FFMPEG_VERSION"_netint_v"$NI_RELEASE_VERSION"_"$RC".diff
 RUN chmod u+x build_ffmpeg.sh
