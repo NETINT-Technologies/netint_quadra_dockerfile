@@ -3,9 +3,9 @@ LABEL org.opencontainers.image.authors="NETINT Technologies" \
       org.opencontainers.image.description="Docker file example for NETINT VPU using the SDK package"
 
 ARG DEBIAN_FRONTEND=noninteractive \
-    NI_RELEASE_VERSION=5.3.1 \
+    NI_RELEASE_VERSION=5.4.0 \
     #Supported GStreamer versions can be found at: https://docs.netint.com/vpu/quadra
-    GST_VER=1.24.4 \
+    GST_VER=1.26.2 \
     NI_INSTALL_DIR="/NI_Release" \
     NI_PACKAGE_NAME="Quadra_V${NI_RELEASE_VERSION}.zip" \
     NI_PACKAGE_FOLDER="Quadra_V${NI_RELEASE_VERSION}"
