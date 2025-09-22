@@ -38,11 +38,18 @@ WORKDIR $NI_INSTALL_DIR
 RUN set -e && git clone --depth 1 --branch ${GST_VER} https://gitlab.freedesktop.org/gstreamer/gstreamer.git
 
 # GStreamer patch & install
-RUN set -e && cp $NI_INSTALL_DIR/${NI_PACKAGE_FOLDER}/Quadra_SW_V*/gstreamer-${GST_VER}_*.diff ${NI_INSTALL_DIR}/gstreamer/
+RUN set -e && cp ${NI_INSTALL_DIR}/${NI_PACKAGE_FOLDER}/Quadra_SW_V*/gstreamer-${GST_VER}_*.diff ${NI_INSTALL_DIR}/gstreamer/
+RUN set -e && mv ${NI_INSTALL_DIR}/${NI_PACKAGE_FOLDER}/Quadra_SW_V*/ni-gstreamer-plugins ${NI_INSTALL_DIR}/gstreamer/.
 WORKDIR ${NI_INSTALL_DIR}/gstreamer
 RUN set -e && patch -t -p 1 < gstreamer-*.diff
 RUN set -e && bash ./build_gstreamer.sh --install
+WORKDIR ${NI_INSTALL_DIR}/gstreamer/ni-gstreamer-plugins    
+RUN set -e && bash ./build_ni_gst_plugins.sh -i
+
 RUN set -e && export LD_LIBRARY_PATH=/usr/local/lib/x86_64-linux-gnu/
+RUN set -e && export GST_PLUGIN_SYSTEM_PATH=/usr/local/lib/x86_64-linux-gnu/gstreamer-1.0
+RUN set -e && export GST_PLUGIN_PATH=/usr/local/lib/x86_64-linux-gnu/gstreamer-1.0
+
 RUN set -e && ldconfig
 
 # Create entrypoint script to initialize NETINT VPUs on startup
