@@ -36,7 +36,7 @@ WORKDIR /NI_Release/FFmpeg-"$FFMPEG_VERSION"
 RUN patch -t -p 1 < FFmpeg-"$FFMPEG_VERSION"_netint_v"$NI_RELEASE_VERSION"_*.diff && \
     chmod u+x build_ffmpeg.sh && \
     chmod u+x run_ffmpeg_quadra.sh
-ENV PKG_CONFIG_PATH /usr/local/lib/pkgconfig/
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/
 RUN echo 'y' | bash ./build_ffmpeg.sh --ffprobe --shared && \
     make install
 ENV LD_LIBRARY_PATH=/usr/local/lib/ 
