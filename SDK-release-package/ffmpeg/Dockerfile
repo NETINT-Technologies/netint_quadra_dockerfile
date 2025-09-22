@@ -3,7 +3,7 @@ LABEL org.opencontainers.image.authors="NETINT Technologies" \
       org.opencontainers.image.description="Docker file example for NETINT VPU using the SDK package"
 
 ARG DEBIAN_FRONTEND=noninteractive \
-    NI_RELEASE_VERSION=5.3.1 \
+    NI_RELEASE_VERSION=5.4.0 \
     NI_PACKAGE_NAME="Quadra_V${NI_RELEASE_VERSION}.zip" \
     NI_PACKAGE_FOLDER="Quadra_V${NI_RELEASE_VERSION}" \
     #Supported FFmpeg versions can be found at: https://docs.netint.com/vpu/quadra
@@ -36,7 +36,7 @@ WORKDIR /NI_Release/FFmpeg-"$FFMPEG_VERSION"
 RUN patch -t -p 1 < FFmpeg-"$FFMPEG_VERSION"_netint_v"$NI_RELEASE_VERSION"_*.diff && \
     chmod u+x build_ffmpeg.sh && \
     chmod u+x run_ffmpeg_quadra.sh
-ENV PKG_CONFIG_PATH /usr/local/lib/pkgconfig/
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/
 RUN echo 'y' | bash ./build_ffmpeg.sh --ffprobe --shared && \
     make install
 ENV LD_LIBRARY_PATH=/usr/local/lib/ 

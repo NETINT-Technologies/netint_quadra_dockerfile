@@ -16,12 +16,12 @@ The Dockerfile here can be used to create a docker image with Netint Quadra libx
    **FFmpeg build arguments**
 
        NI_RELEASE_VERSION=x.y.z        version number of Netint Quadra SDK Release package
-       FFMPEG_VERSION=n7.0             version number of FFmpeg to use
+       FFMPEG_VERSION=n7.1             version number of FFmpeg to use
 
     **GSTreamer build arguments**
 
         NI_RELEASE_VERSION=x.y.z        version number of Netint Quadra SDK Release package
-        GST_VER=1.22.2		            Gstreamer Release
+        GST_VER=1.26.2		            Gstreamer Release
 
 
 3. Start docker targeting quadra NVMe device:
@@ -30,8 +30,8 @@ The Dockerfile here can be used to create a docker image with Netint Quadra libx
     sudo docker run -it --device=/dev/nvme0 --device=/dev/nvme0n1 ni_quadra_sw /bin/bash
    ```
 
-   Please make sure you are targetting the correct Quadra NVMe device and block paths.
-   If you want to give the container sudo permission to control the device, you can add `--privileged` argurment 
+   Please make sure you are targeting the correct Quadra NVMe device and block paths.
+   If you want to give the container sudo permission to control the device, you can add `--privileged` argument 
    
 4. Run the test program:
 
