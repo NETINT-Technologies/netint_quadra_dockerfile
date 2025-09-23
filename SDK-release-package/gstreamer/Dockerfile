@@ -1,10 +1,10 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 LABEL org.opencontainers.image.authors="NETINT Technologies" \
       org.opencontainers.image.description="Docker file example for NETINT VPU using the SDK package"
 
 ARG DEBIAN_FRONTEND=noninteractive \
     NI_RELEASE_VERSION=5.4.0 \
-    #Supported GStreamer versions can be found at: https://docs.netint.com/vpu/quadra
+    # Supported GStreamer versions can be found at: https://docs.netint.com/vpu/quadra
     GST_VER=1.26.2 \
     NI_INSTALL_DIR="/NI_Release" \
     NI_PACKAGE_NAME="Quadra_V${NI_RELEASE_VERSION}.zip" \
@@ -20,10 +20,14 @@ RUN apt-get update && apt-get install -y \
     nvme-cli yasm pkg-config git gcc make g++ sudo wget uuid-runtime udev unzip python3-pip \
     flex bison libpng-dev zlib1g-dev gnutls-bin uuid-dev libglib2.0-dev libxml2 libxml2-dev \
     libsrt-openssl-dev graphviz curl libaom-dev libaom3 aom-tools nasm \
-    && python3 -m pip install meson ninja \
+    ninja-build pipx \
+    && pipx install meson \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Add pipx meson to PATH
+ENV PATH="/root/.local/bin:${PATH}"
+    
 # Unzip NETINT SDK
 WORKDIR $NI_INSTALL_DIR
 RUN set -e && unzip "$NI_PACKAGE_NAME"
@@ -57,4 +61,3 @@ USER root
 COPY entrypoint.sh /usr/local/bin/
 RUN set -e && chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-
