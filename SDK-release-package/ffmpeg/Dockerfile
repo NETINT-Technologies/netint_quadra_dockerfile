@@ -3,7 +3,7 @@ LABEL org.opencontainers.image.authors="NETINT Technologies" \
       org.opencontainers.image.description="Docker file example for NETINT VPU using the SDK package"
 
 ARG DEBIAN_FRONTEND=noninteractive \
-    NI_RELEASE_VERSION=5.4.0 \
+    NI_RELEASE_VERSION=5.5.0 \
     NI_PACKAGE_NAME="Quadra_V${NI_RELEASE_VERSION}.zip" \
     NI_PACKAGE_FOLDER="Quadra_V${NI_RELEASE_VERSION}" \
     #Supported FFmpeg versions can be found at: https://docs.netint.com/vpu/quadra
